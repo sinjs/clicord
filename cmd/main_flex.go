@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"log"
+	"log/slog"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -57,7 +57,8 @@ func (mf *MainFlex) onInputCapture(event *tcell.EventKey) *tcell.EventKey {
 	case cfg.Keys.Logout:
 		app.Stop()
 		if err := keyring.Delete(constants.Name, "token"); err != nil {
-			log.Fatal(err)
+			slog.Error("failed to delete token from keyring", "err", err)
+			return nil
 		}
 		return nil
 	case cfg.Keys.ToggleGuildsTree:

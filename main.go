@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"log"
+	"log/slog"
 
 	"github.com/sinjs/clicord/cmd"
 	"github.com/sinjs/clicord/internal/constants"
@@ -18,13 +18,13 @@ func main() {
 	if *token == "" {
 		t, err := keyring.Get(constants.Name, "token")
 		if err != nil {
-			log.Println("failed to get token from keyring:", err)
+			slog.Info("failed to get token from keyring", "err", err)
 		} else {
 			*token = t
 		}
 	}
 
 	if err := cmd.Run(*token); err != nil {
-		log.Fatal(err)
+		slog.Error("failed to run", "err", err)
 	}
 }
