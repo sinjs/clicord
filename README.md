@@ -52,6 +52,9 @@ application. To configure clicord, create the config file at one of these locati
 
 ```toml
 mouse = true # Allows mouse usage
+hide_blocked_users = true # If enabled, the content of blocked messages will be hidden
+messages_limit = 50 # The amount of messages to fetch in one channel
+editor = "default" # Any executable for an editor, for example `nvim`. By default it uses the $EDITOR environment variable, or if not found, `vi`
 
 timestamps = true # If enabled, message timestamps will be displayed
 timestamps_before_author = true # If enabled, timestamps will be displayed before the author name instead of directly after it
@@ -62,9 +65,6 @@ user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 os = "Windows"
 browser = "Chrome"
 device = ""
-
-messages_limit = 50 # The amount of messages to fetch in one channel
-editor = "default" # Any executable for an editor, for example `nvim`. By default it uses the $EDITOR environment variable, or if not found, `vi`
 
 # Keybindings: These keybinds are equivalent to the result of https://pkg.go.dev/github.com/gdamore/tcell#EventKey.Name
 [keys]
