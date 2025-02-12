@@ -39,6 +39,7 @@ func newMessagesText() *MessagesText {
 		app.Draw()
 	})
 
+	mt.SetTextColor(tcell.GetColor(cfg.Theme.MessagesText.ContentColor))
 	mt.SetBackgroundColor(tcell.GetColor(cfg.Theme.BackgroundColor))
 
 	mt.SetTitle("Messages")
@@ -146,7 +147,7 @@ func (mt *MessagesText) createBody(w io.Writer, m discord.Message, isReply bool)
 	if isReply {
 		fmt.Fprint(w, "[::d]")
 	}
-	fmt.Fprint(w, markdown.Parse(tview.Escape(body), cfg.Theme.MessagesText.EmoteColor))
+	fmt.Fprint(w, markdown.Parse(tview.Escape(body), cfg.Theme.MessagesText.EmojiColor))
 	if isReply {
 		fmt.Fprint(w, "[::-]")
 	}

@@ -16,13 +16,17 @@ type (
 	}
 
 	GuildsTreeTheme struct {
-		AutoExpandFolders bool `toml:"auto_expand_folders"`
-		Graphics          bool `toml:"graphics"`
+		AutoExpandFolders   bool   `toml:"auto_expand_folders"`
+		ChannelColor        string `toml:"channel_color"`
+		Graphics            bool   `toml:"graphics"`
+		GuildColor          string `toml:"guild_color"`
+		PrivateChannelColor string `toml:"private_channel_color"`
 	}
 
 	MessagesTextTheme struct {
 		AuthorColor    string `toml:"author_color"`
-		EmoteColor     string `toml:"emote_color"`
+		ContentColor   string `toml:"content_color"`
+		EmojiColor     string `toml:"emoji_color"`
 		ReplyIndicator string `toml:"reply_indicator"`
 	}
 )
@@ -37,12 +41,16 @@ func defaultTheme() Theme {
 		TitleColor:      "default",
 
 		GuildsTree: GuildsTreeTheme{
-			AutoExpandFolders: true,
-			Graphics:          true,
+			AutoExpandFolders:   true,
+			ChannelColor:        tview.Styles.PrimaryTextColor.String(),
+			Graphics:            true,
+			GuildColor:          tview.Styles.PrimaryTextColor.String(),
+			PrivateChannelColor: tview.Styles.PrimaryTextColor.String(),
 		},
 		MessagesText: MessagesTextTheme{
 			AuthorColor:    "pink",
-			EmoteColor:     "red",
+			ContentColor:   tview.Styles.PrimaryTextColor.String(),
+			EmojiColor:     "red",
 			ReplyIndicator: string(tview.BoxDrawingsLightArcDownAndRight) + " ",
 		},
 	}
