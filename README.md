@@ -107,5 +107,6 @@ graphics = true
 
 [theme.messages_text]
 author_color = "pink"
+emote_color = "red"
 reply_indicator = "╭ "
 ```
