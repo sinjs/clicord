@@ -10,7 +10,9 @@ import (
 )
 
 type Config struct {
-	Mouse bool `toml:"mouse"`
+	Mouse         bool   `toml:"mouse"`
+	MessagesLimit uint8  `toml:"messages_limit"`
+	Editor        string `toml:"editor"`
 
 	Timestamps             bool   `toml:"timestamps"`
 	TimestampsBeforeAuthor bool   `toml:"timestamps_before_author"`
@@ -21,17 +23,15 @@ type Config struct {
 	Browser   string `toml:"browser"`
 	Device    string `toml:"device"`
 
-	MessagesLimit uint8 `toml:"messages_limit"`
-
-	Editor string `toml:"editor"`
-
 	Keys  Keys  `toml:"keys"`
 	Theme Theme `toml:"theme"`
 }
 
-func DefaultConfig() Config {
-	return Config{
-		Mouse: true,
+func defaultConfig() *Config {
+	return &Config{
+		Mouse:         true,
+		MessagesLimit: 50,
+		Editor:        "default",
 
 		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.3",
 		OS:        "Windows",
@@ -42,9 +42,6 @@ func DefaultConfig() Config {
 		TimestampsBeforeAuthor: true,
 		TimestampsFormat:       time.Kitchen,
 
-		MessagesLimit: 50,
-		Editor:        "default",
-
 		Keys:  defaultKeys(),
 		Theme: defaultTheme(),
 	}
@@ -52,16 +49,10 @@ func DefaultConfig() Config {
 
 // Reads the configuration file and parses it.
 func Load() (*Config, error) {
-	path, err := os.UserConfigDir()
-	if err != nil {
-		return nil, err
-	}
-
-	cfg := DefaultConfig()
-	path = filepath.Join(path, constants.Name, "config.toml")
+	path := filepath.Join(constants.ConfigDirPath, "config.toml")
 	f, err := os.Open(path)
 	if os.IsNotExist(err) {
-		return &cfg, nil
+		return defaultConfig(), nil
 	}
 
 	if err != nil {
@@ -69,9 +60,10 @@ func Load() (*Config, error) {
 	}
 	defer f.Close()
 
+	var cfg *Config
 	if _, err := toml.NewDecoder(f).Decode(&cfg); err != nil {
 		return nil, err
 	}
 
-	return &cfg, nil
+	return cfg, nil
 }
