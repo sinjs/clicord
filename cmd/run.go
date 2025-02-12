@@ -17,17 +17,15 @@ var (
 	mainFlex *MainFlex
 )
 
-func init() {
+func Run(token string) error {
+	if err := logger.Load(); err != nil {
+		return err
+	}
+
 	var err error
 	cfg, err = config.Load()
 	if err != nil {
 		panic(err)
-	}
-}
-
-func Run(token string) error {
-	if err := logger.Load(); err != nil {
-		return err
 	}
 
 	if token == "" {

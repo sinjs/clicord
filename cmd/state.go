@@ -13,20 +13,18 @@ import (
 	"github.com/rivo/tview"
 )
 
-func init() {
+type State struct {
+	*state.State
+}
+
+func openState(token string) error {
 	api.UserAgent = cfg.UserAgent
 	gateway.DefaultIdentity = gateway.IdentifyProperties{
 		OS:      cfg.OS,
 		Browser: cfg.Browser,
 		Device:  cfg.Device,
 	}
-}
 
-type State struct {
-	*state.State
-}
-
-func openState(token string) error {
 	discordState = &State{
 		State: state.New(token),
 	}
