@@ -1,8 +1,12 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
+	"github.com/sinjs/clicord/internal/constants"
+	"github.com/zalando/go-keyring"
 )
 
 type MainFlex struct {
@@ -49,6 +53,12 @@ func (mf *MainFlex) onInputCapture(event *tcell.EventKey) *tcell.EventKey {
 		return nil
 	case cfg.Keys.FocusMessageInput:
 		app.SetFocus(mf.messageInput)
+		return nil
+	case cfg.Keys.Logout:
+		app.Stop()
+		if err := keyring.Delete(constants.Name, "token"); err != nil {
+			log.Fatal(err)
+		}
 		return nil
 	case cfg.Keys.ToggleGuildsTree:
 		// The guilds tree is visible if the numbers of items is two.
