@@ -13,6 +13,8 @@ require (
 	github.com/zalando/go-keyring v0.2.6
 )
 
+require go4.org v0.0.0-20200411211856-f5505b9728dd // indirect
+
 require (
 	al.essio.dev/pkg/shellescape v1.5.1 // indirect
 	github.com/danieljoos/wincred v1.2.2 // indirect
@@ -25,6 +27,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/twmb/murmur3 v1.1.3 // indirect
+	github.com/yuin/goldmark v1.7.8
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
