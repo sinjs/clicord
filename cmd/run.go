@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"log/slog"
-
-	"github.com/rivo/tview"
 	"github.com/sinjs/clicord/internal/config"
 	"github.com/sinjs/clicord/internal/logger"
 )
@@ -12,7 +9,7 @@ var (
 	discordState *State
 
 	cfg      *config.Config
-	app      = tview.NewApplication()
+	app      *Application
 	mainFlex *MainFlex
 )
 
@@ -27,34 +24,11 @@ func Run(token string) error {
 		panic(err)
 	}
 
+	// app must be initialized after configuration is loaded
+	app = newApplication()
+
 	// mainFlex must be initialized before opening a new state.
 	mainFlex = newMainFlex()
-	if token == "" {
-		lf := NewLoginForm(func(token string, err error) {
-			if err != nil {
-				app.Stop()
-				slog.Error("failed to login", "err", err)
-				return
-			}
 
-			if err := openState(token); err != nil {
-				app.Stop()
-				slog.Error("failed to open state", "err", err)
-				return
-			}
-
-			app.SetRoot(mainFlex, true)
-		})
-
-		app.SetRoot(lf, true)
-	} else {
-		if err := openState(token); err != nil {
-			return err
-		}
-
-		app.SetRoot(mainFlex, true)
-	}
-
-	app.EnableMouse(cfg.Mouse)
-	return app.Run()
+	return app.Run(token)
 }
